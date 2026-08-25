@@ -72,4 +72,4 @@ The container is capped at 512 MB memory and 1 CPU, sized to leave enough headro
 
 ## Zero-Downtime Deployment
 
-Deployments use a blue-green approach: the new container starts up alongside the old one on a separate port and is health-checked independently. Traffic is only switched over to it once it's confirmed healthy, and the old container is removed afterward. The app stays reachable the entire time.
+Each deployment pulls the new Docker image, replaces the running container, and performs a health check before marking the deployment successful. If the deployment fails, Jenkins automatically rolls back to the previous working image.
