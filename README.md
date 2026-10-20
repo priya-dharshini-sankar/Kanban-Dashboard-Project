@@ -32,6 +32,17 @@ AWS EC2 Deployment
      ↓
 Container Health Check
 ```
+## 🧩 Application Overview
+
+| Component | Technology | Purpose |
+|---|---|---|
+| **Frontend** | React + TypeScript | Interactive Kanban dashboard for task management |
+| **Build Tool** | Vite + Node.js | Builds and bundles the frontend application |
+| **Web Server** | Nginx | Serves the production frontend |
+| **Data Storage** | Browser localStorage | Persists tasks locally without a backend database |
+| **Containerization** | Docker | Packages the application for deployment on AWS EC2 |
+
+**Application Flow:** `Browser → Nginx → React Dashboard → localStorage`
 
 ## ⚙️ Engineering Highlights
 
