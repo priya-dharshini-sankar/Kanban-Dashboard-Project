@@ -1,75 +1,70 @@
-# Kanban Task Manager — Dockerized CI/CD Deployment on AWS with Jenkins
+<div align="center">
 
-A Kanban-style task manager (React + TypeScript + Vite) deployed as a Docker container on AWS EC2, with a Jenkins-based CI/CD pipeline triggered by GitHub pushes.
+# 🚀 Kanban Dashboard | Jenkins CI/CD on AWS
 
-**Live app:** http://15.252.139.5/
-**Docker Hub:** [priyanp/project-kanban-dashboard](https://hub.docker.com/repository/docker/priyanp/project-kanban-dashboard/general)
-**GitHub:** [Kanban Dashboard](https://github.com/priya-dharshini-sankar/Kanban-Dashboard-Project)
+### Automated Application Delivery · Containerization · Cloud Deployment
+
+**A hands-on DevOps project demonstrating automated CI/CD, Docker containerization, versioned image delivery, and application deployment on AWS EC2.**
+
+![AWS](https://img.shields.io/badge/AWS-EC2-10212B?style=for-the-badge&logo=amazonwebservices&logoColor=FF9900)
+![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-10212B?style=for-the-badge&logo=jenkins&logoColor=D24939)
+![Docker](https://img.shields.io/badge/Docker-Containerization-10212B?style=for-the-badge&logo=docker&logoColor=2496ED)
+![React](https://img.shields.io/badge/React-TypeScript-10212B?style=for-the-badge&logo=react&logoColor=61DAFB)
+
+</div>
 
 ---
 
-## How It Works
+## 🏗️ CI/CD Architecture
 
 ```text
-GitHub → Jenkins → Docker Build → Docker Hub → AWS EC2 → Health Check → Live
+GitHub Push
+     ↓
+GitHub Webhook
+     ↓
+Jenkins Pipeline
+     ↓
+Docker Build & Versioned Tag
+     ↓
+Docker Hub Registry
+     ↓
+AWS EC2 Deployment
+     ↓
+Container Health Check
 ```
 
-Every push to `main` triggers Jenkins automatically through a GitHub webhook. Jenkins builds a fresh Docker image, pushes it to Docker Hub, deploys it to the EC2 instance, and health-checks it before calling the deployment successful.
+## ⚙️ Engineering Highlights
+
+- **Containerization:** Built a multi-stage Docker image using Node.js and Nginx, with a non-root runtime user and container health checks.
+- **CI/CD Automation:** Implemented a Jenkins pipeline automating Docker image builds, registry publishing, and AWS EC2 deployment through GitHub webhooks.
+- **Image Versioning:** Tagged images using Jenkins build numbers and Git commit SHAs for deployment traceability.
+- **Cloud Deployment:** Deployed the React/TypeScript application on AWS EC2 using Docker.
+- **Deployment Validation:** Integrated container health checks, Jenkins build logs, and rollback logic for failed deployments.
+- **Blue-Green Deployment:** Separately demonstrated health-checked traffic switching using Nginx.
+
+## 📊 Documented Results
+
+| Validation | Outcome |
+|---|---|
+| Jenkins CI/CD Pipeline | Successful |
+| GitHub Webhook Trigger | Verified |
+| Docker Image Build & Publishing | Successful |
+| AWS EC2 Deployment | Validated |
+| Container Health Check | Healthy |
+| Blue-Green Deployment Exercise | Demonstrated |
+
+*Results reflect the completed project implementation, not a currently active deployment.*
+
+## 📚 Project Documentation
+
+### 📄 [Explore the Complete Project Documentation →](./Project%20Documentation.pdf)
+
+*Docker · Jenkins CI/CD · AWS EC2 · Security · Health Checks · Deployment Validation*
 
 ---
 
-## Tech Stack
+<div align="center">
 
-React, TypeScript, and Vite on the frontend; Docker (multi-stage build, Nginx runtime) for containerization; Jenkins for CI/CD; AWS EC2 for hosting; Docker Hub as the image registry.
+**GitHub → Jenkins → Docker → AWS EC2**
 
----
-
-## Docker Setup
-
-The image is built in two stages — a Node build stage that compiles the app, and a slim Nginx stage that serves only the compiled output. This keeps the final image small and free of source code or dev dependencies. It includes a HEALTHCHECK so Docker can monitor container health automatically.
-
-The container runs as a non-root user rather than root, and a `.dockerignore` file keeps things like `node_modules`, `.git`, and `.env` out of the build entirely. No secrets or credentials are stored in the Dockerfile or baked into the image.
-
----
-
-## Registry & Versioning
-
-Images are pushed to Docker Hub tagged with the Jenkins build number and Git commit SHA (e.g. `build-4-e89ead4`) rather than relying on `latest`, so every deployed version is traceable back to the exact commit that produced it.
-
----
-
-## AWS Infrastructure
-
-The app runs on a `t3.small` Ubuntu EC2 instance that also hosts Jenkins. Nginx listens on port 80 and routes traffic to the active Docker container.
-
----
-
-## Jenkins Configuration
-
-Jenkins connects to this GitHub repo using credentials stored securely in its own credentials store (GitHub, Docker Hub, and AWS) — nothing is ever hardcoded. The pipeline job reads its stages directly from the Jenkinsfile committed to the repo.
-
----
-
-## The Pipeline
-
-The Jenkinsfile runs six stages on every build: checkout the latest code, build and tag the Docker image, push it to Docker Hub, deploy it to EC2, run a health check, and roll back automatically if anything fails along the way.
-
-A GitHub webhook means this whole sequence kicks off the moment code is pushed to `main` — nobody has to trigger a build by hand.
-
----
-
-## Monitoring & Logs
-
-Jenkins keeps a full build history, so both successful and failed runs (and exactly what went wrong) stay visible for troubleshooting. On the EC2 side, standard Docker commands confirm the container is running, healthy, and serving real traffic.
-
----
-
-## Resource Limits
-
-The container is capped at 512 MB memory and 1 CPU, sized to leave enough headroom for Jenkins to run comfortably alongside it on the same instance.
-
----
-
-## Zero-Downtime Deployment
-
-Each deployment pulls the new Docker image, replaces the running container, and performs a health check before marking the deployment successful. If the deployment fails, Jenkins automatically rolls back to the previous working image.
+</div>
